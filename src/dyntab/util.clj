@@ -2,13 +2,15 @@
   (:require [clojure.core.reducers :as r]
             [clojure.set :as set]))
 
+; multimap
 (defn mmap-get [m k]
   (get m k #{}))
 
+;
 (defn mmap-conj [m [k v]]
   (assoc m k (conj (mmap-get m k)
                    v)))
-
+;
 (defn mmap-merge [& ms]
   (apply merge-with into ms))
   
