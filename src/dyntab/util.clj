@@ -3,20 +3,23 @@
             [clojure.set :as set]))
 
 ; multimap
+; (t/ann mmap-get [t/Any :-> t/Set])
 (defn mmap-get [m k]
   (get m k #{}))
 
-;
+; 
 (defn mmap-conj [m [k v]]
   (assoc m k (conj (mmap-get m k)
                    v)))
-;
+; merging multimap
 (defn mmap-merge [& ms]
   (apply merge-with into ms))
-  
+ 
+; merging multimap with overwrite
 (defn map-merge-overwrite [& ms]
   (apply merge-with (fn [x y] y) ms))
 
+; gets the first one
 (defn mmap-get-unique [m k]
   (let [v (mmap-get m k)]
     (if-not (= (count v) 1)
